@@ -1,8 +1,7 @@
 # models.py
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
+from sqlalchemy import Column, Integer, String, DateTime
+from database import Base
+from datetime import datetime
 
 class User(Base):
     __tablename__ = 'users'
@@ -12,3 +11,4 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     full_name = Column(String)
     hashed_password = Column(String)
+    created_date = Column(DateTime, default=datetime.utcnow)
