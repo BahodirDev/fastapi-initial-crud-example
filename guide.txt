@@ -1,0 +1,35 @@
+1. Creat DataBase with 
+`
+from sqlalchemy import create_engine, MetaData
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+
+DATABASE_URL = f"postgresql://postgres:sqlme@localhost:5433/test"
+
+engine = create_engine(DATABASE_URL)
+
+Base = declarative_base()
+metadata = MetaData()
+`
+
+2. Creat Models
+`
+# models.py
+from sqlalchemy import Column, Integer, String, DateTime
+from database import Base
+from datetime import datetime
+
+class User(Base):
+    __tablename__ = 'users'
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True)
+    email = Column(String, unique=True, index=True)
+    full_name = Column(String)
+    hashed_password = Column(String)
+    created_date = Column(DateTime, default=datetime.utcnow)
+`
+
+
+alembic revision --autogenerate -m "Initial migration"
+alembic upgrade head
